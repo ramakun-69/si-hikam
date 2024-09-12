@@ -1,0 +1,226 @@
+<script>
+    /* STYLE */
+    function styleForMobile() {
+        $(".dataTables_length select").addClass("form-control mb-2");
+        $(".dataTables_filter input").addClass("form-control mb-2");
+        $(".dataTables_filter input").removeClass("form-control-sm");
+    }
+    /* END STYLE */
+    function setDataTable(_URL, _COLUMNS, customOptions = null, afterLoad = null) {
+        // loadingStart();
+
+        var options = {
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: _URL,
+            },
+            language: {
+                searchPlaceholder: "Cari",
+                search: "",
+                // processing: `<i class="spinner-border text-success m-1"></i>`,
+            },
+            // order : [[1, 'asc']],
+            columns: _COLUMNS,
+            columnDefs: [{
+                searchable: false,
+                orderable: false,
+                targets: [0, -1],
+            }, ],
+            paging: true,
+            lengthChange: true,
+            ordering: true,
+            info: true,
+            autoWidth: true,
+            responsive: true,
+            scrollX: true,
+            scroller: true,
+
+            preDrawCallback: function() {
+                $("#dataTable").find("tbody").hide();
+            },
+            drawCallback: function() {
+                $("#dataTable").find("tbody").show();
+                if (afterLoad != null) {
+                    afterLoad();
+                }
+                styleForMobile();
+            },
+        };
+        if (customOptions != null) {
+            options = customOptions(options);
+        }
+        return $("#dataTable").DataTable(options);
+    }
+
+    function setDataTableWithFooter(_URL, _COLUMNS, footerCallback = null) {
+        // loadingStart();
+        var loading = buildLoading();
+
+        return $("#dataTable").DataTable({
+            processing: true,
+            serverSide: true,
+            header: true,
+            footer: true,
+            ajax: {
+                url: _URL,
+            },
+            language: {
+                searchPlaceholder: "Cari",
+                search: "",
+                processing: `${loading}<br> {{ __("Wait a moment") }} ...`,
+            },
+            columns: _COLUMNS,
+            columnDefs: [{
+                searchable: false,
+                orderable: false,
+                targets: [0, -1],
+            }, ],
+            paging: true,
+            lengthChange: true,
+            ordering: true,
+            info: true,
+            autoWitdh: false,
+            responsive: false,
+            scrollX: true,
+            order: [
+                [1, "asc"]
+            ],
+            footerCallback: footerCallback,
+            preDrawCallback: function() {
+                $("#dataTable").find("tbody").hide();
+            },
+            drawCallback: function() {
+                console.log("aokasd");
+                $("#dataTable").find("tbody").show();
+                styleForMobile();
+            },
+        });
+    }
+
+    function setDataTableMultiple(_TABLE, _URL, _COLUMNS) {
+        // loadingFormStart();
+
+        return _TABLE.DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: _URL,
+            },
+            language: {
+                searchPlaceholder: "Cari",
+                search: "",
+            },
+            columns: _COLUMNS,
+            columnDefs: [{
+                searchable: false,
+                orderable: false,
+                targets: [0, -1],
+            }, ],
+            paging: true,
+            lengthChange: true,
+            ordering: true,
+            info: true,
+            autoWidth: false,
+            responsive: true,
+            // order: [[1, 'asc']],
+        });
+    }
+
+    function setDataTableWithSearch(
+        _URL,
+        _COLUMNS,
+        _FILTER,
+        customOptions = null,
+        afterLoad = null
+    ) {
+        // loadingStart();
+        var loading = buildLoading();
+        var options = {
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: _URL,
+            },
+            language: {
+                searchPlaceholder: "Cari",
+                search: "",
+                processing: `${loading}<br> Tunggu sebentar ...`,
+            },
+            // order : [[1, 'asc']],
+            columns: _COLUMNS,
+            columnDefs: [{
+                searchable: false,
+                orderable: false,
+                targets: [0, -1],
+            }, ],
+            paging: true,
+            lengthChange: true,
+            ordering: true,
+            info: true,
+            autoWidth: true,
+            responsive: true,
+            scrollX: true,
+            scroller: true,
+
+            preDrawCallback: function() {
+                $("#dataTable").find("tbody").hide();
+            },
+            drawCallback: function() {
+                $("#dataTable").find("tbody").show();
+                if (afterLoad != null) {
+                    afterLoad();
+                }
+                styleForMobile();
+            },
+        };
+
+        if (customOptions != null) {
+            options = customOptions(options);
+        }
+        return $("#dataTable").DataTable(options);
+    }
+    $.extend(false, $.fn.dataTable.defaults, {
+        responsive: {
+            details: {
+                renderer: function(api, rowIdx) {
+                    // Select hidden columns for the given row
+                    var data = api
+                        .cells(rowIdx, ":hidden")
+                        .eq(0)
+                        .map(function(cell) {
+                            var header = $(api.column(cell.column).header());
+
+                            return (
+                                '<tr style="border-style:hidden;">' +
+                                '<th class="text-dark">' +
+                                header.text() +
+                                ":" +
+                                "</th> " +
+                                "<td>" +
+                                api.cell(cell).data() +
+                                "</td>" +
+                                "</tr>"
+                            );
+                        })
+                        .toArray()
+                        .join("");
+
+                    return data ? $("<table/>").append(data) : false;
+                },
+            },
+        },
+    });
+
+    function iniFixedColumnDatatable(_TABLE) {
+        new $.fn.dataTable.FixedColumns(_TABLE, {
+            rightColumns: 1, // Jumlah kolom yang ingin tetap terlihat di sebelah kanan
+        });
+    }
+
+    function iniFixedColumnStartDatatable(_TABLE, column) {
+        new $.fn.dataTable.FixedColumns(_TABLE, {
+            leftColumns: column, // Jumlah kolom yang ingin tetap terlihat di sebelah kanan
+        });
+    }
+</script>
