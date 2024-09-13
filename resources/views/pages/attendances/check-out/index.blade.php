@@ -30,7 +30,7 @@
         function getQr() {
             $.ajax({
                 type: "GET",
-                url: "{{ route('attendance.check-in.get-qr') }}",
+                url: "{{ route('attendance.check-out.get-qr') }}",
                 dataType: "json",
                 beforeSend: function() {
                     showLoading();

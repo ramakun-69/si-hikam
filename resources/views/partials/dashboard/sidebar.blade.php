@@ -33,16 +33,17 @@
         </div>
     </li>
 
-    <li class="nav-item {{ Request::is('attendance/*') ? 'active' : ''}}">
+    <li class="nav-item {{ Request::is('attendance/check-in') ? 'active' : ''}}">
         <a class="nav-link" href="{{ route('attendance.check-in') }}">
             <i class="fas fa-fw fa-clock"></i>
             <span>{{ __("Check In") }}</span></a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ url('qr_code') }}">
+    <li class="nav-item {{ Request::is('attendance/check-out') ? 'active' : ''}}">
+        <a class="nav-link" href="{{ route('attendance.check-out') }}">
             <i class="fas fa-fw fa-clock"></i>
             <span>{{ __("Check Out") }}</span></a>
     </li>
+  
     <li class="nav-item">
         <a class="nav-link" href="{{ url('user') }}">
             <i class="fas fa-fw fa-history"></i>

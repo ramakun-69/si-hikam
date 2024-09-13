@@ -19,6 +19,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('leave-request/type-of-leave', TypeOfLeaveController::class);
     Route::resource('user', UserController::class);
     Route::get('attendance/check-in', [AttendanceController::class, 'checkIn'])->name('attendance.check-in');
-    Route::get('/attendance/check-in/get-qr', [AttendanceController::class, 'getQr'])->name('get-qr');
+    Route::get('/attendance/check-in/get-qr', [AttendanceController::class, 'getQrCheckIn'])->name('attendance.check-in.get-qr');
+    Route::get('attendance/check-out', [AttendanceController::class, 'checkIn'])->name('attendance.check-out');
+    Route::get('/attendance/check-out/get-qr', [AttendanceController::class, 'getQr'])->name('attendance.check-out.get-qr');
    
 });
