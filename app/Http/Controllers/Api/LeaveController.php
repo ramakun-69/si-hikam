@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\TypeOfLeaveResource;
+use Carbon\Carbon;
 use App\Models\TypeOfLeave;
-use App\Traits\ResponseOutput;
 use Illuminate\Http\Request;
+use App\Traits\ResponseOutput;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Leave\LeaveRequest;
+use App\Http\Resources\TypeOfLeaveResource;
+use App\Models\LeaveRequest as ModelsLeaveRequest;
 
 class LeaveController extends Controller
 {
@@ -22,9 +25,15 @@ class LeaveController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(LeaveRequest $request)
     {
-        //
+        return $this->safeExecute(function () use ($request) {
+            $data = $request->validated();
+            $data['date'] = Carbon::today();
+            $data['time'] = Carbon::now()->format('H:i:s');
+            ModelsLeaveRequest::create($data);
+            return $this->responseSuccess(['message'=> __("Leave Request Created Successfully")]);
+        });
     }
 
     /**
@@ -53,7 +62,7 @@ class LeaveController extends Controller
 
     public function typeOfLeave()
     {
-        return $this->safeExecute(function(){
+        return $this->safeExecute(function () {
             $typeOfLeave = TypeOfLeaveResource::collection(TypeOfLeave::all());
             return $this->responseSuccess($typeOfLeave);
         });

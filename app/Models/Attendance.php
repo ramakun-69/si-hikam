@@ -13,7 +13,7 @@ class Attendance extends Model
     protected $guarded = [
         'id'
     ];
-
+    
     public function scopeGetAttendanceByDate($query, $startDate, $endDate = null)
     {
         return $query->when(
@@ -30,5 +30,10 @@ class Attendance extends Model
                     ->whereYear('tanggal', date('Y', strtotime($startDate)));
             }
         )->where('user_id', Auth::id());
+    }
+
+    public function scopeDaily()
+    {
+
     }
 }

@@ -26,7 +26,8 @@ Route::middleware('auth:sanctum')->group(function () {
     // Route::get('/permission-type', [PermissionsTypeController::class, 'show'])->name('showTypePermission');
 
     Route::get('leave-request/type-of-leave', [LeaveController::class, 'typeOfLeave']);
-    Route::post('attendance/check-in', [AttendancesController::class, 'checkIn']);
+    Route::post('leave-request/store', [LeaveController::class, 'store']);
+    Route::post('attendance/scan', [AttendancesController::class, 'scan']);
 });
 
 Route::post('/authenticate', [AuthController::class, 'authenticate'])->middleware('guest')->name('api.authenticate');

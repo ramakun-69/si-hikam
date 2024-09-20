@@ -23,29 +23,37 @@ class AttendanceRepositoryImplement extends Eloquent implements AttendanceReposi
         $this->model = $model;
     }
 
-    public function checkIn($request)
+    public function scan($request)
     {
-
         $qrCode = QrCode::where('data', $request->qrcode)->first();
-        if ($qrCode) {
-            $today = Carbon::today();
-            $existingAttendance = Attendance::where('nip', $qrCode->nip)
-                ->whereDate('date', $today)
-                ->first();
-            if ($existingAttendance) {
-                return [ "status"=>false ,'message' => __("You Have Attended Today")];
+
+        if (!$qrCode) {
+            return ["status" => false, 'message' => __("QR Not Found")];
+        }
+
+        $today = Carbon::today();
+        $attendance = Attendance::where('nip', $qrCode->nip)
+            ->whereDate('date', $today)
+            ->first();
+
+        if ($attendance) {
+            if (is_null($attendance->clock_out)) {
+                $attendance->clock_out = Carbon::now()->format('H:i:s');
+                $attendance->save();
+                return ['status' => true, 'message' => __('Check-out successful'), 'attendance' => $attendance];
+            } else {
+                return ['status' => false, 'message' => __('You have already checked out today')];
             }
-            $attendance =  Attendance::create([
+        } else {
+            $attendance = Attendance::create([
                 'nip' => $qrCode->nip,
-                'date'   => $today,
-                'clock_in'    => Carbon::now()->format('H:i:s'),
-                'clock_out'   => null,
+                'date' => $today,
+                'clock_in' => Carbon::now()->format('H:i:s'),
+                'clock_out' => null,
                 'late' => now()->greaterThan(Carbon::today()->setTime(7, 15, 0)),
             ]);
+
             return ['status' => true, 'attendance' => $attendance];
         }
-         return ["status"=>false ,'message' => __("QR Not Found")];
     }
-
-    public function checkOut($request) {}
 }

@@ -9,7 +9,7 @@ class Employee extends Model
 {
     use HasFactory;
     protected $guarded =['id'];
-    protected $with =['user', 'qrCode'];
+    protected $with =['user', 'qrCode','attendances','leaveRequests'];
 
     public function qrCode()
     {
@@ -20,7 +20,7 @@ class Employee extends Model
     {
         return $this->hasMany(Attendance::class, 'nip','nip');
     }
-    public function leaveRequest()
+    public function leaveRequests()
     {
         return $this->hasMany(LeaveRequest::class, 'nip','nip');
     }

@@ -41,7 +41,7 @@ class UserRepositoryImplement extends Eloquent implements UserRepository
             ]);
             QrCode::create([
                 'nip' => $data['nip'],
-                'data' => Str::random(10),
+                'data' => Str::random(60),
             ]);
         });
     }

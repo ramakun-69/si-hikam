@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('qr_codes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('nip');
-            $table->string('data');
+            $table->string('data')->unique();
             $table->timestamps();
         });
     }

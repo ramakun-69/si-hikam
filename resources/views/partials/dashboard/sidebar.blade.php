@@ -28,7 +28,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                
                 <a class="collapse-item" href="{{ route('type-of-leave.index') }}">{{ __("Type Of Leave") }}</a>
-                <a class="collapse-item" href="{{ url('todo/edit') }}">{{ __("Leave Request List") }}</a>
+                <a class="collapse-item" href="{{ route('leave-request.list') }}">{{ __("Leave Request List") }}</a>
             </div>
         </div>
     </li>
@@ -45,7 +45,7 @@
     </li>
   
     <li class="nav-item">
-        <a class="nav-link" href="{{ url('user') }}">
+        <a class="nav-link" href="{{ route('attendance.daily') }}">
             <i class="fas fa-fw fa-history"></i>
             <span>{{ __("Daily Attendences") }}</span></a>
     </li>

@@ -36,8 +36,14 @@ window.Echo.channel("attendance-channel").listen(
     ".attendance-checked-in",
     (e) => {
         console.log("Attendance updated", e.attendance);
-        // Reload atau update daftar QR
-        refreshQrList();
+        refreshQrCheckInList();
+    }
+);
+window.Echo.channel("attendance-channel").listen(
+    ".attendance-checked-out",
+    (e) => {
+        console.log("Attendance updated", e.attendance);
+        refreshQrCheckOutList();
     }
 );
 function showLoading() {
@@ -48,11 +54,32 @@ function hideLoading() {
     $("#loading").addClass("d-none");
     // $("#spinner").addClass('d-none');
 }
-function refreshQrList() {
+function refreshQrCheckInList() {
     const appUrl = import.meta.env.VITE_APP_URL;
     $.ajax({
         type: "GET",
         url: appUrl + "/attendance/check-in/get-qr",
+        dataType: "json",
+        beforeSend: function () {
+            $("#qr").empty();
+            showLoading();
+        },
+        success: function (response) {
+           
+            $("#qr").append(response);
+            hideLoading();
+        },
+        error: function () {
+            hideLoading();
+            console.error("Terjadi kesalahan saat memuat QR code");
+        },
+    });
+}
+function refreshQrCheckOutList() {
+    const appUrl = import.meta.env.VITE_APP_URL;
+    $.ajax({
+        type: "GET",
+        url: appUrl + "/attendance/check-out/get-qr",
         dataType: "json",
         beforeSend: function () {
             $("#qr").empty();

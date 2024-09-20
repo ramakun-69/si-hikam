@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <h1 class="h3 mb-2 text-gray-800">{{ __('Check In') }}</h1>
+    <h1 class="h3 mb-2 text-gray-800">{{ $title }}</h1>
     <div class="card shadow mb-4">
         <div id="loading" class="d-none">
             <div class="d-flex align-items-center justify-content-center mt-5">

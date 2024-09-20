@@ -7,7 +7,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class AttendanceCheckedIn implements ShouldBroadcast
+class AttendanceCheckedOut implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -30,6 +30,6 @@ class AttendanceCheckedIn implements ShouldBroadcast
 
     public function broadcastAs()
     {
-        return 'attendance-checked-in';
+        return 'attendance-checked-out';
     }
 }

@@ -271,5 +271,6 @@ return [
         'username'                 => 'nama pengguna',
         'value'                    => 'nilai',
         'year'                     => 'tahun',
+        "type_of_leave_id"         => 'Jenis Perizinan'
     ],
 ];
