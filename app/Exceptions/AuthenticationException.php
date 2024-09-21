@@ -6,11 +6,12 @@ use Exception;
 
 class AuthenticationException extends Exception
 {
-   
-    protected $statusCode;
-    public function __construct($message = "Unauthorized", $statusCode = 401)
+
+    protected $statusCode, $data;
+    public function __construct($data, $statusCode = 401)
     {
-        parent::__construct($message);
+        parent::__construct();
+        $this->data= $data;
         $this->statusCode = $statusCode;
     }
 
@@ -20,8 +21,8 @@ class AuthenticationException extends Exception
             return response()->json([
                 'status' => false,
                 'response_code' => $this->statusCode,
-                'message' => $this->getMessage(),
-                'data' => null
+                'message' => __("Failed"),
+                'data' => $this->data
             ], $this->statusCode);
         }
 
