@@ -29,7 +29,34 @@
                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
            },
        });
-     
+       $("#logout").click(function(e) {
+           e.preventDefault();
+           var href = $(this).attr("href");
+           Swal.fire({
+               title: "{{ __('Are You Sure?') }}",
+               text: "{{ __('You Will End This Session') }}",
+               icon: "warning",
+               showClass: {
+                   popup: `animate__animated
+                        animate__zoomIn
+                        animate__faster`
+               },
+               hideClass: {
+                   popup: `animate__animated
+                        animate__zoomOut
+                        animate__faster`
+               },
+               showCancelButton: true,
+               confirmButtonColor: "#4e73df",
+               cancelButtonColor: "#da5643",
+               confirmButtonText: "{{ __('Yes') }}",
+               cancelButtonText: "{{ __('No') }}"
+           }).then((result) => {
+               if (result.isConfirmed) {
+                   window.location.href = href;
+               }
+           });
+       });
    </script>
    @stack('js')
    @vite('resources/js/app.js')
