@@ -31,8 +31,14 @@ class LeaveController extends Controller
             $data = $request->validated();
             $data['date'] = Carbon::today();
             $data['time'] = Carbon::now()->format('H:i:s');
+            $existingLeave = ModelsLeaveRequest::where('nip', $data['nip'])
+                ->whereDate('date', Carbon::today())
+                ->exists();
+            if ($existingLeave) {
+                return $this->responseFailed(__("You have already submitted a leave request today."));
+            }
             ModelsLeaveRequest::create($data);
-            return $this->responseSuccess(['message'=> __("Leave Request Created Successfully")]);
+            return $this->responseSuccess(['error' => __("Leave Request Created Successfully")]);
         });
     }
 

@@ -18,6 +18,6 @@ class Authenticate extends Middleware
     }
     protected function unauthenticated($request, array $guards)
     {
-       throw new AuthenticationException('Anda tidak terautentikasi. Silakan login terlebih dahulu.');
+       throw new AuthenticationException(['message' => 'Anda tidak terautentikasi. Silakan login terlebih dahulu.']);
     }
 }
