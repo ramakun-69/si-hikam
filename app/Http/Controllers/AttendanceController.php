@@ -21,7 +21,7 @@ class AttendanceController extends Controller
         $today = Carbon::today()->format('Y-m-d');
         $employees = Employee::whereDoesntHave('attendances', function ($query) use ($today) {
             $query->whereDate('date', $today);
-        })->whereDoesntHave('leaveRequest', function ($query) use ($today) {
+        })->whereDoesntHave('leaveRequests', function ($query) use ($today) {
             $query->whereDate('date', $today);
         })->get();
 
@@ -50,7 +50,7 @@ class AttendanceController extends Controller
             $query->whereDate('date', $today)
                 ->whereNotNull('clock_in')
                 ->whereNull('clock_out');
-        })->whereDoesntHave('leaveRequest', function ($query) use ($today) {
+        })->whereDoesntHave('leaveRequests', function ($query) use ($today) {
             $query->whereDate('date', $today);
         })->get();
         $employees->map(function ($user) {
