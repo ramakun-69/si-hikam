@@ -47,7 +47,7 @@ class AttendancesResource extends JsonResource
             $leaveRequest = $leaveRequests->get($date);
 
             return [
-                'date' => toDateIndo($date),
+                'date' => toDateIndo($date,true,false),
                 'clock_in' => $attendance->clock_in ?? '-',
                 'clock_out' => $attendance->clock_out ?? '-',
                 'leave_request' => $leaveRequest ? $leaveRequest->type->name : '-',
