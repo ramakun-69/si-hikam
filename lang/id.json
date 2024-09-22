@@ -229,6 +229,7 @@
     "Time" : "Jam",
     "Successful Presence": "Presensi Berhasil",
     "Successful Presence (Late)" : "Presensi Berhasil(Terlambat)",
+    "Present (No Clock Out)" : "Hadir (Tidak Absen Pulang)",
     "Present (Late)" : "Hadir (Terlambat)",
     "QR Not Found" : "QR Tidak Ditemukan",
     "Successful Return Attendance" : "Berhasil Presensi Pulang",

@@ -26,20 +26,20 @@ class AttendancesResource extends JsonResource
 
         $today = Carbon::today();
         $firstDayOfMonth = $today->copy()->startOfMonth();
-        $lastDayOfMonth = $today->copy()->endOfMonth();
+
         $dates = collect();
-        for ($date = $firstDayOfMonth->copy(); $date->lte($lastDayOfMonth); $date->addDay()) {
+        for ($date = $firstDayOfMonth->copy(); $date->lte($today); $date->addDay()) {
             if (!$date->isSunday()) {
                 $dates->push($date->format('Y-m-d'));
             }
         }
 
         $attendances = Attendance::where('nip', $this->nip)
-            ->whereBetween('date', [$firstDayOfMonth, $lastDayOfMonth])
+            ->whereBetween('date', [$firstDayOfMonth, $today])
             ->get()->keyBy('date');
 
         $leaveRequests = LeaveRequest::where('nip', $this->nip)
-            ->whereBetween('date', [$firstDayOfMonth, $lastDayOfMonth])
+            ->whereBetween('date', [$firstDayOfMonth, $today])
             ->get()->keyBy('date');
 
         return $dates->map(function ($date) use ($attendances, $leaveRequests) {
@@ -59,12 +59,17 @@ class AttendancesResource extends JsonResource
     private function getStatus($attendance, $leaveRequest)
     {
         if ($attendance) {
-            if ($attendance->clock_in && $attendance->clock_out) {
-                return $attendance->late ? __('Present (Late)') : __('Present');
-            } elseif ($attendance->clock_in && $leaveRequest) {
+            // Clock in but no clock out
+            if ($attendance->clock_in && !$attendance->clock_out && $leaveRequest) {
                 return __('Leave');
+            } elseif ($attendance->clock_in && !$attendance->clock_out) {
+                return __('Present (No Clock Out)');
+            } elseif ($attendance->clock_in && $attendance->clock_out) {
+                return __('Present');
             }
+        } else {
+            // No clock in or clock out
+            return $leaveRequest ? __('Leave') : __('Absent');
         }
-        return __('Absent');
     }
 }
