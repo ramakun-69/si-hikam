@@ -31,7 +31,7 @@ class AttendanceRepositoryImplement extends Eloquent implements AttendanceReposi
             return ["status" => false, 'message' => __("QR Not Found")];
         }
 
-        $today = Carbon::today();
+        $today = Carbon::today()->format('Y-m-d');
         $attendance = Attendance::where('nip', $qrCode->nip)
             ->whereDate('date', $today)
             ->first();

@@ -9,4 +9,12 @@
     <title>{{ env('APP_NAME') }} || {{ $title }}</title>
 
     @include('partials.auth.css')
+    <style>
+        .bg-login-image {
+            background: url("{{ asset('img/logo-smk.png') }}") !important;
+            background-position: center !important;
+            background-size: contain !important;
+            background-repeat: no-repeat !important;
+        }
+    </style>
 </head>

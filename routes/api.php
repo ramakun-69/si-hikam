@@ -27,7 +27,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('leave-request/type-of-leave', [LeaveController::class, 'typeOfLeave']);
     Route::post('leave-request/store', [LeaveController::class, 'store']);
-    Route::post('attendance/scan', [AttendancesController::class, 'scan']);
+    Route::get('attendances/{nip}', [AttendancesController::class, 'attendances']);
+    Route::post('attendances/scan', [AttendancesController::class, 'scan']);
 });
 
 Route::post('/authenticate', [AuthController::class, 'authenticate'])->middleware('guest')->name('api.authenticate');

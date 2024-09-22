@@ -8,6 +8,7 @@ use App\Traits\ResponseOutput;
 use App\Events\AttendanceCheckedIn;
 use App\Events\AttendanceCheckedOut;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AttendancesResource;
 use App\Repositories\Attendance\AttendanceRepository;
 
 
@@ -21,6 +22,15 @@ class AttendancesController extends Controller
         $this->attendanceRepository = $attendanceRepository;
     }
 
+
+    public function attendances($nip)
+    {
+      
+        return $this->safeExecute(function () use ($nip) {
+            $attendances = new AttendancesResource($nip);
+            return $this->responseSuccess($attendances);
+        });
+    }
     public function scan(Request $request)
     {
         return $this->safeExecute(function () use ($request) {
@@ -39,47 +49,5 @@ class AttendancesController extends Controller
             }
             return $this->responseFailed($result['message']);
         });
-    }
-
-
-
-
-
-
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }
