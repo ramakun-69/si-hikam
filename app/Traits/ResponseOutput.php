@@ -30,7 +30,7 @@ trait ResponseOutput
             'status' => false,
             'message' => __("Failed") . "!!",
             'data' => [
-                'error' => (config('app.debug')) ? $failedMsg : __("server_error")
+                'message' => $failedMsg
             ]
         ], 500);
     }
