@@ -49,7 +49,7 @@
                     // console.log(response);
                     iziToast.error({
                         title: '{{ __("Failed") }}',
-                        message: response.responseJSON.data.error,
+                        message: response.responseJSON.data.message,
                         position: 'bottomCenter'
                     });
                     resetBtnSubmit(btn,btnOri)
@@ -58,7 +58,7 @@
                     console.log(response);
                     iziToast.error({
                         title: '{{ __("Success") }}',
-                        message: response.responseJSON.data.error,
+                        message: response.responseJSON.data.message,
                         position: 'bottomCenter'
                     });
                     resetBtnSubmit(btn,btnOri)

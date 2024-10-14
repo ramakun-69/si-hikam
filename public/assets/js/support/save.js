@@ -99,10 +99,10 @@ function saveForm(
                         resetBtnSubmit(btn, btnOri);
                     },
                     500: function (response) {
-                        if (response && response.responseJSON.data.error) {
+                        if (response && response.responseJSON.data.message) {
                             iziToast.error({
                                 title: translations.failed,
-                                message: response.responseJSON.data.error,
+                                message: response.responseJSON.data.message,
                                 position: "bottomCenter",
                             });
                         }
@@ -110,10 +110,10 @@ function saveForm(
                         reject(response);
                     },
                     400: function (response) {
-                        if (response && response.responseJSON.data.error) {
+                        if (response && response.responseJSON.data.message) {
                             iziToast.error({
                                 title: translations.failed,
-                                message: response.responseJSON.data.error,
+                                message: response.responseJSON.data.message,
                                 position: "bottomCenter",
                             });
                         }
@@ -223,15 +223,15 @@ function saveFormNotForModal(
                 },
                 500: function (response) {
                     console.log(response);
-                    if (response && response.responseJSON.data.error) {
+                    if (response && response.responseJSON.data.message) {
                         iziToast.error({
                             title: translations.failed,
-                            message: response.responseJSON.data.error,
+                            message: response.responseJSON.data.message,
                             position: "bottomCenter",
                         });
                     }
                     resetBtnSubmit(btn, btnOri);
-                    reject(response.responseJSON.data.error);
+                    reject(response.responseJSON.data.message);
                 },
             },
         };
@@ -275,10 +275,10 @@ function ajax(url, btn, method = "post") {
             statusCode: {
                 500: function (response) {
                     console.log(response);
-                    if (response && response.responseJSON.data.error) {
+                    if (response && response.responseJSON.data.message) {
                         iziToast.error({
                             title: translations.failed,
-                            message: response.responseJSON.data.error,
+                            message: response.responseJSON.data.message,
                             position: "bottomCenter",
                         });
                     }

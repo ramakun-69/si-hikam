@@ -10,6 +10,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class DailyAttendancesResources extends JsonResource
 {
+    protected $nip;
+
+    public function __construct($nip)
+    {
+        $this->nip = $nip;
+    }
     /**
      * Transform the resource into an array.
      *
@@ -17,8 +23,8 @@ class DailyAttendancesResources extends JsonResource
      */
     public function toArray(Request $request): array
     {
+      
         $today = Carbon::today();
-
         // Mengambil absensi hari ini dan membuat key berdasarkan date
         $attendances = Attendance::where('nip', $this->nip)
             ->whereDate('date', $today)
