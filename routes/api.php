@@ -28,6 +28,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('leave-request/type-of-leave', [LeaveController::class, 'typeOfLeave']);
     Route::post('leave-request/store', [LeaveController::class, 'store']);
     Route::get('attendances/{nip}', [AttendancesController::class, 'attendances']);
+    Route::get('attendances/daily/{nip}', [AttendancesController::class, 'dailyAttendances']);
     Route::post('attendances/scan', [AttendancesController::class, 'scan']);
 });
 

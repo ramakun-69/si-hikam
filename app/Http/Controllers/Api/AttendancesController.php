@@ -12,6 +12,7 @@ use App\Http\Resources\AttendancesResource;
 use App\Repositories\Attendance\AttendanceRepository;
 
 
+
 class AttendancesController extends Controller
 {
     use ResponseOutput;
@@ -25,7 +26,7 @@ class AttendancesController extends Controller
 
     public function attendances($nip)
     {
-      
+
         return $this->safeExecute(function () use ($nip) {
             $attendances = new AttendancesResource($nip);
             return $this->responseSuccess($attendances);
@@ -48,6 +49,13 @@ class AttendancesController extends Controller
                 return $this->responseSuccess(['message' => $message]);
             }
             return $this->responseFailed($result['message']);
+        });
+    }
+
+    public function dailyAttendances($nip)
+    {
+        return $this->safeExecute(function() use($nip){
+            
         });
     }
 }
